@@ -27,14 +27,7 @@ describe('TEST',() => {
              '    let c = 0;\n' +
              '    \n' +
              '    if (b < z) {\n' +
-             '        c = c + 5;\n' +
-             '        return x + y + z + c;\n' +
-             '    } else if (b < z * 2) {\n' +
-             '        c = c + x + 5;\n' +
-             '        return x + y + z + c;\n' +
-             '    } else {\n' +
-             '        c = c + z + 5;\n' +
-             '        return x + y + z + c;\n' +
+             '        c = c + 5;\n' + '        return x + y + z + c;\n' + '    } else if (b < z * 2) {\n' + '        c = c + x + 5;\n' + '        return x + y + z + c;\n' + '    } else {\n' + '        c = c + z + 5;\n' + '        return x + y + z + c;\n' +
              '    }\n' +
              '}\n';
         let parse = parseCode(code);
@@ -45,31 +38,37 @@ describe('TEST',() => {
 
     });
 });
-// describe('TEST',() => {
-//     it('TEST2', () => {
-//
-//         let code = '{for(var i=0;i<5;i++){i++;}}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"For Statement","name":"","condition":"var i = 0;i < 5;i++","value":""},{"line":1,"type":"Update Expr' +
-//             'ession","name":"","condition":"","value":"i++"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST3', () => {
-//
-//         let code = 'function binarySearch(X, V, n){' +
-//             '    let low, high, mid;' +
-//             '    low = 0;' +
-//             '    high = n - 1;' +
-//             '}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"FunctionDeclaration","name":"binarySearch","condition":"","value":""},{"line":1,"type":"Variable Declaration","name":"X","condition":"","Value":""},{"line":1,"type":"Variable Declaration","name":"V","condition":"","Value":""},{"line":1,"type":"Variable Declaration","name":"n","condition":"","Value":""},{"line":1,"type":"Variable Declaration","name":"low","condition":"","Value":"null"},{"line":1,"type":"Variable Declaration","name":"high","condition":"","Value":"null"},{"line":1,"type":"Variable Declaration","name":"mid","condition":"","Value":"null"},{"line":1,"type":"Assignment Expression","name":"low","condition":"","Value":"0"},{"line":1,"type":"Assignment Expression","name":"high","condition":"","Value":"n - 1"}]');
-//     });
-// });
+describe('TEST',() => {
+    it('TEST2', () => {
+        let code = 'function foo(x, y, z){\n' +
+             '    let a = x + 1;\n' +
+             '    let b = a + y;\n' +
+             '    let c = 0;\n' +
+             '    \n' +
+             '    while (a < z) {\n' +
+             '        c = a + b;\n' +
+             '        z = c * 2;\n' +
+             '    }\n' +
+             '    \n' +
+             '    return z;\n' +
+             '}\n';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'2,3,5');
+        assert.equal(y,'<pre>function foo(x, y, z) {\n    while (x + 1 < z) {\n        z = (x + 1 + (x + 1 + y)) * 2;\n    }\n    return z;\n}\n</pre>');
+    });
+});
+/*describe('TEST',() => {
+    it('TEST3', () => {
+
+        let code = 'function binarySearch(X, V, n){' +
+             '    let low, high, mid;' + '}';
+        let parse = parseCode(code);
+        let check = [];
+        Starter(parse,check);
+        assert.equal(JSON.stringify(check),'');
+    });
+});*/
 // describe('TEST',() => {
 //     it('TEST4', () => {
 //
