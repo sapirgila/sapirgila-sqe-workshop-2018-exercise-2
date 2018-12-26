@@ -33,9 +33,8 @@ describe('TEST',() => {
         let parse = parseCode(code);
         let x=Starter(parse);
         let y=GenerateHtmlCode(x,'2,3,5');
-        assert.equal(y,'<pre>function foo(x, y, z) {\n<strong style="color:red">    if (x + 1 + y < z) {</strong>\n        return x + y + z + 5;\n<strong style="color:green">    } else if (x + 1 + y < z * 2) {</strong>\n        return x + y + z + (0 + x + 5);\n    } else {\n        return x + y + z + (0 + z + 5);\n    }\n}\n</pre>');
-
-
+        assert.equal(y,'<pre>function foo(x, y, z) {\n<strong style="color:red">    if (x + 1 + y < z) {</strong>\n        return x + y + z + (0 + 5);\n<strong style="color:green">    } ' +
+            'else if (x + 1 + y < z * 2) {</strong>\n        return x + y + z + (0 + x + 5);\n    } else {\n        return x + y + z + (0 + z + 5);\n    }\n}\n</pre>');
     });
 });
 describe('TEST',() => {
@@ -58,96 +57,92 @@ describe('TEST',() => {
         assert.equal(y,'<pre>function foo(x, y, z) {\n    while (x + 1 < z) {\n        z = (x + 1 + (x + 1 + y)) * 2;\n    }\n    return z;\n}\n</pre>');
     });
 });
-/*describe('TEST',() => {
+describe('TEST',() => {
     it('TEST3', () => {
 
         let code = 'function binarySearch(X, V, n){' +
-             '    let low, high, mid;' + '}';
+             '    let low=0; ' +
+            '     let high=2; ' +
+            '     let mid=1;' + '}';
         let parse = parseCode(code);
-        let check = [];
-        Starter(parse,check);
-        assert.equal(JSON.stringify(check),'');
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'2,3,5');
+        assert.equal(y,'<pre>function binarySearch(X, V, n) {\n}\n</pre>');
     });
-});*/
-// describe('TEST',() => {
-//     it('TEST4', () => {
-//
-//         let code = '{function a(){if(x<y){ return y;} else {return x;}}}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"FunctionDeclaration","name":"a","condition":"","value":""},{"line":1,"type":"if statement","name"' + ':"","condition":"x < y","value":""},{"line":1,"type":"return statement","name":"","condition":"","value":"y"},{"line":1,"type":"' + 'return statement","name":"","condition":"","value":"x"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST5', () => {
-//
-//         let code = 'for(var i=0;i<5;i++){if(x>i) x=i; else {x=x;}}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"For Statement","name":"","condition":"var i = 0;i < 5;i++","value":""},{"line":1,"type":"if statemen' +
-//             't","name":"","condition":"x > i","value":""},{"line":1,"type":"Assignment Expression","name":"x","condition":"","Value":"i"},{"li' +
-//             'ne":1,"type":"Assignment Expression","name":"x","condition":"","Value":"x"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST6', () => {
-//
-//         let code = 'if(x>y) x=y; else if(y>x) y=x;';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"if statement","name":"","condition":"x > y","value":""},{"line":1,"type":"Assignment Expression","' +
-//             'name":"x","condition":"","Value":"y"},{"line":1,"type":"else if statement","name":"","condition":"y > x","value":""},{"line":1,"t' +
-//             'ype":"Assignment Expression","name":"y","condition":"","Value":"x"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST7', () => {
-//
-//         let code = 'while(x>y) x++;';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"while statement","name":"","condition":"x > y","value":""},{"line":1,"type":"Update Expression","n' +
-//             'ame":"","condition":"","value":"x++"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST8', () => {
-//
-//         let code = 'for(var j=0;j<i;j++) {x--; y++;}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"For Statement","name":"","condition":"var j = 0;j < i;j++","value":""},{"line":1,"type":"Update Exp' +
-//             'ression","name":"","condition":"","value":"x--"},{"line":1,"type":"Update Expression","name":"","condition":"","value":"y++"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST9', () => {
-//
-//         let code = 'if(x+1>i) {x=x+1;}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"if statement","name":"","condition":"x + 1 > i","value":""},{"line":1,"type":"Assignment Expression' +
-//             '","name":"x","condition":"","Value":"x + 1"}]');
-//     });
-// });
-// describe('TEST',() => {
-//     it('TEST10', () => {
-//
-//         let code = 'while(x>y){for(var i=0;i<5;i++){x=x+1}}';
-//         let parse = parseCode(code);
-//         let check = [];
-//         Starter(parse,check);
-//         assert.equal(JSON.stringify(check),'[{"line":1,"type":"while statement","name":"","condition":"x > y","value":""},{"line":1,"type":"For Statement","name' +
-//             '":"","condition":"var i = 0;i < 5;i++","value":""},{"line":1,"type":"Assignment Expression","name":"x","condition":"","Value":"x + 1"' +
-//             '}]');
-//     });
-// });
+});
+describe('TEST',() => {
+    it('TEST4', () => {
+
+        let code = 'function a(Z){let x=4; let y=5; if(x<y){ return y;} else {return x;}}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'2');
+        assert.equal(y,'<pre>function a(Z) {\n<strong style="color:green">    if (4 < 5) {</strong>\n        return y;\n    } else {\n        return x;\n    }\n}\n</pre>');
+
+    });
+});
+describe('TEST',() => {
+    it('TEST5', () => {
+
+        let code = 'function vars(x){let i=0; return i;}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'2');
+        assert.equal(y,'<pre>function vars(x) {\n    return i;\n}\n</pre>');
+    });
+});
+describe('TEST',() => {
+    it('TEST6', () => {
+
+        let code = 'function a(x,y){if(x+1>y) x=y; else if(y-1>x) y=x;}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'2,5');
+        assert.equal(y,'<pre>function a(x, y) {\n<strong style="color:red">    if (4 + 1 > 5)</strong>\n        x = y;\n<strong style="color:red">    else if (5 - 1 > 4)</strong>\n      ' +
+            '  y = x;\n}\n</pre>');
+    });
+});
+describe('TEST',() => {
+    it('TEST7', () => {
+
+        let code = 'function Z(){let x=0; let y=1; while(x>y){ x=x+1;}}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'');
+        assert.equal(y,'<pre>function Z() {\n    while (0 > 1) {\n        x = 0 + 1;\n    }\n}\n</pre>');
+    });
+});
+describe('TEST',() => {
+    it('TEST8', () => {
+
+        let code = 'function x(y) {y = 4; return y;}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'2');
+        assert.equal(y,'<pre>function x(y) {\n    return y;\n}\n</pre>');
+
+    });
+});
+describe('TEST',() => {
+    it('TEST9', () => {
+
+        let code = 'function a(x,y,z,c){let d=1; if(c>d) return y;}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'1,2,3,4');
+        assert.equal(y,'<pre>function a(x, y, z, c) {\n<strong style="color:red">    if (0 > 1)</strong>\n        return y;\n}\n</pre>');
+    });
+});
+describe('TEST',() => {
+    it('TEST10', () => {
+
+        let code = 'function arr(x){if(x>0) return x; else return x+3}';
+        let parse = parseCode(code);
+        let x=Starter(parse);
+        let y=GenerateHtmlCode(x,'1');
+        assert.equal(y,'<pre>function arr(x) {\n<strong style="color:red">    if (0 > 0)</strong>\n        return x;\n    else\n        return 0 + 3;\n}\n</pre>');
+    });
+});
 // describe('TEST',() => {
 //     it('TEST11', () => {
 //
