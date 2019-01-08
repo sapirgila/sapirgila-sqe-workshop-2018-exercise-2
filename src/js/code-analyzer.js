@@ -10,26 +10,16 @@ function Splice_body (program_tree)
     let body = program_tree['body'];
     var i=0;
     while(i<body.length){
-        var j=Starter(body[i]);
-        if(j==-1){body.splice(i,1);}
-        else i++;
-    }
-}
+        Starter(body[i]);
+        i++;
+    }}
 function FunctionDEC_PARSER(program_tree){
     let parameters = program_tree['params'];
     for(var i=0; i<parameters.length;i++){Starter(parameters[i]);}
     let body = program_tree['body'];
     Splice_body(body);
 }
-// function LITERAL_PARSER(program_tree){ if(program_tree=='nothing') return 0; else return 0;}
-
-function Identifier_PARSER(){  return 0; }
-//if(program_tree!='nothing')
-//==
-// else return 0 ;
-
 let dont_remove = false;
-
 function identifier(val) {
     if (while_mod && left_vars.includes(val.name))
         dont_remove = true;
@@ -54,9 +44,8 @@ function find_identifier_and_replace(val){
 function clone_map(arr){
     let arr2 = new Map();
     for(var [key,val] of arr) {
-        arr2.set(key,JSON.parse(JSON.stringify(val)));
-    }// console.log("cloned");
-    // console.log(arr2);
+        arr2.set(key, JSON.parse(JSON.stringify(val)));
+    }
     return arr2;
 }
 var hasIdentifiers;
@@ -70,7 +59,6 @@ function VarDEC_PARSER(program_tree) {
                 parseScript(eval(escodegen.generate(declarations_extract[j].init))+';').body[0].expression;
         current_env.set(declarations_extract[j].id.name, declarations_extract[j].init);
     }
-    return -1;
 }
 
 // function VariableDeclarator() {}
@@ -103,9 +91,7 @@ function IfStatement_PARSER(program_tree)
 
     if(program_tree['alternate']!==null)
         Starter(program_tree['alternate']);
-    return 0;
 }
-
 let left_vars = [], while_mod = false;
 function WhileExp_PARSER(program_tree) {
     let body = program_tree.body.body;
@@ -113,36 +99,17 @@ function WhileExp_PARSER(program_tree) {
     clones.push(current_env);
     current_env = clone_map(current_env);
     left_vars = []; while_mod = true;
-    for(var i=0;i<body.length;i++)
+    for(let i=0;i<body.length;i++)
     {
-        // if(body[i].type=='ExpressionStatement')
         left_vars.push(body[i].expression.left.name);
     }
     Starter( program_tree.body); while_mod = false;
     current_env = clones.pop();
-    return 0;
 }
-// function BinaryExpression(program_tree){
-//     Starter(program_tree.right);
-//     Starter(program_tree.left);
-//     return 0;
-// }
-
 function Return_PARSER(program_tree){
     program_tree.argument = find_identifier_and_replace(program_tree.argument);
 }
-// function Update_EXP(program_tree) {
-//     //let operator = program_tree['operator'];
-//     //let s = escodegen.generate(program_tree['argument']);
-//     //let final_value = s + operator;
-//     if(program_tree=='nothing') return 0; else return 0 ;
-//     //   array.push({line:program_tree['loc']['start']['line'], type:'Update Expression',name:'',condition:'',value:final_value});
-// }
-// const TYPE_MAP_FUNC = {FunctionDeclaration: FunctionDEC_PARSER, VariableDeclaration:VarDEC_PARSER,Identifier:Identifier_PARSER,AssignmentExpression: AssExp,Literal:LITERAL_PARSER,BinaryExpression: BinaryExpression,
-//     ExpressionStatement: ExpState,WhileStatement: WhileExp_PARSER,IfStatement: IfStatement_PARSER,
-//     BlockStatement: Splice_body,VariableDeclarator:VariableDeclarator, ReturnStatement: Return_PARSER, UpdateExpression:Update_EXP};
-
-const TYPE_MAP_FUNC = {FunctionDeclaration: FunctionDEC_PARSER, VariableDeclaration:VarDEC_PARSER,Identifier:Identifier_PARSER,AssignmentExpression: AssExp,
+const TYPE_MAP_FUNC = {FunctionDeclaration: FunctionDEC_PARSER, VariableDeclaration:VarDEC_PARSER,AssignmentExpression: AssExp,
     ExpressionStatement: ExpState,WhileStatement: WhileExp_PARSER,IfStatement: IfStatement_PARSER,
     BlockStatement: Splice_body, ReturnStatement: Return_PARSER};
 
@@ -163,8 +130,6 @@ function Starter(program_tree){
     return program_tree;
 }
 let clones = [], current_env = new Map();
-
-
 // --------------------------------------------------------------------------------------------------------------------------------------
 
 
