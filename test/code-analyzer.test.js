@@ -22,14 +22,14 @@ describe('TEST',() => {
     it('TEST1', () => {
 
         let code = 'function foo(x, y, z){\n' +
-             '    let a = x + 1;\n' +
-             '    let b = a + y;\n' +
-             '    let c = 0;\n' +
-             '    \n' +
-             '    if (b < z) {\n' +
-             '        c = c + 5;\n' + '        return x + y + z + c;\n' + '    } else if (b < z * 2) {\n' + '        c = c + x + 5;\n' + '        return x + y + z + c;\n' + '    } else {\n' + '        c = c + z + 5;\n' + '        return x + y + z + c;\n' +
-             '    }\n' +
-             '}\n';
+            '    let a = x + 1;\n' +
+            '    let b = a + y;\n' +
+            '    let c = 0;\n' +
+            '    \n' +
+            '    if (b < z) {\n' +
+            '        c = c + 5;\n' + '        return x + y + z + c;\n' + '    } else if (b < z * 2) {\n' + '        c = c + x + 5;\n' + '        return x + y + z + c;\n' + '    } else {\n' + '        c = c + z + 5;\n' + '        return x + y + z + c;\n' +
+            '    }\n' +
+            '}\n';
         let parse = parseCode(code);
         let x=Starter(parse);
         let y=GenerateHtmlCode(x,'2,3,5');
@@ -40,17 +40,17 @@ describe('TEST',() => {
 describe('TEST',() => {
     it('TEST2', () => {
         let code = 'function foo(x, y, z){\n' +
-             '    let a = x + 1;\n' +
-             '    let b = a + y;\n' +
-             '    let c = 0;\n' +
-             '    \n' +
-             '    while (a < z) {\n' +
-             '        c = a + b;\n' +
-             '        z = c * 2;\n' +
-             '    }\n' +
-             '    \n' +
-             '    return z;\n' +
-             '}\n';
+            '    let a = x + 1;\n' +
+            '    let b = a + y;\n' +
+            '    let c = 0;\n' +
+            '    \n' +
+            '    while (a < z) {\n' +
+            '        c = a + b;\n' +
+            '        z = c * 2;\n' +
+            '    }\n' +
+            '    \n' +
+            '    return z;\n' +
+            '}\n';
         let parse = parseCode(code);
         let x=Starter(parse);
         let y=GenerateHtmlCode(x,'2,3,5');
@@ -61,7 +61,7 @@ describe('TEST',() => {
     it('TEST3', () => {
 
         let code = 'function binarySearch(X, V, n){' +
-             '    let low=0; ' +
+            '    let low=0; ' +
             '     let high=2; ' +
             '     let mid=1;' + '}';
         let parse = parseCode(code);
